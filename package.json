@@ -1,0 +1,25 @@
+{
+  "name": "simple-express-daemon",
+  "version": "0.1.0",
+  "description": "This is simple daemon for cluster express app.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shuvalov-anton/simple-express-daemon.git"
+  },
+  "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
+  "main": "index.js",
+  "keywords": [
+    "daemon",
+    "express"
+  ],
+  "bugs": {
+    "url": "https://github.com/shuvalov-anton/simple-express-daemon/issues"
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    
+  }
+}

@@ -17,9 +17,7 @@
     "url": "https://github.com/shuvalov-anton/simple-express-daemon/issues"
   },
   "dependencies": {
-
+    "commander": "~2.1.0"
   },
-  "devDependencies": {
-    
-  }
+  "devDependencies": {}
 }

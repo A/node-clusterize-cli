@@ -1,0 +1,5 @@
+{
+  "app": "./app.js",
+  "log": "./logs/test.log",
+  "workers": "4"
+}

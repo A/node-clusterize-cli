@@ -78,5 +78,9 @@ if (program.app) {
   });
 
 } else {
-  program.help();
+
+  return module.parent
+    ? null
+    : program.help();
+
 }

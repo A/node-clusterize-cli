@@ -41,20 +41,29 @@ describe('Test', function () {
 
   it('should starts workers', function (done) {
     exec('./bin/node-daemonize start -c ./test/config.json', function (err, stdout) {
-      console.log(stdout);
-      // assert(pkg.version == stdout);
-      done(err);
+      exec('ps aux | grep node-daemonize', function (err, stdout) {
+        var workers = 0;
+        stdout.split('\n').forEach(function (k, v, a) {
+          !! ~k.indexOf('node-daemonize worker ../test/express/app.js') && workers++;
+        });
+        assert(workers === 4);
+        done(err);
+      });
     });
   });
 
 
-  // it('should starts workers, too', function (done) {
-  //   exec('./bin/node-daemonize start -a ./test/app.js -w 4 -l ./test/logs/test.log', function (err, stdout) {
-  //     console.log(stdout);
-  //     done(err);
-  //   });
-  // });
-
-
+  it('should starts workers, too', function (done) {
+    exec('./bin/node-daemonize start -a ../test/app.js -w 4 -l ../test/logs/test.log', function (err, stdout) {
+      exec('ps aux | grep node-daemonize', function (err, stdout) {
+        var workers = 0;
+        stdout.split('\n').forEach(function (k, v, a) {
+          !! ~k.indexOf('node-daemonize worker ../test/app.js') && workers++;
+        });
+        assert(workers === 4);
+        done(err);
+      });
+    });
+  });
 
 });

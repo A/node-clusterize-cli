@@ -8,7 +8,9 @@
     "url": "https://github.com/shuvalov-anton/simple-express-daemon.git"
   },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
-  "main": "./bin/clusterize",
+  "bin": {
+    "clusterize": "./bin/clusterize"
+  },
   "scripts": {
     "test": "mocha"
   },

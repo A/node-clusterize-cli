@@ -10,7 +10,7 @@
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "main": "index.js",
   "scripts": {
-    "test": "jshint -c .jshintrc ./lib ./bin ./test && mocha"
+    "test": "mocha"
   },
   "keywords": [
     "daemon",

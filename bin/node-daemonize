@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+'use strict';
 
 /**
  * Module dependencies.
@@ -7,7 +8,7 @@
 var program        = require('commander');
 var pkg            = require('../package.json');
 var path           = require('path');
-var Daemonize      = require('../lib/node-daemonize');
+var Daemonize         = require('../lib/node-daemonize');
 var tmpdir         = require('os').tmpdir();
 
 // End of Dependencies
@@ -16,7 +17,7 @@ var tmpdir         = require('os').tmpdir();
 var config         = {};
 
 
-module.exports = program
+program
   .version(pkg.version)
   .option('list', 'list of running daemons')
   .option('start', 'Start new daemon')
@@ -36,9 +37,10 @@ if (program.log) config.log = program.log;
 // setup config by inline args
 
 if (program.start) {
-  console.log('daemonize `%s` with config', config.app, JSON.stringify(config));
-  new Daemonize(config);
-  /* new Daemon(config) */
+  process.nextTick(function () {
+    new Daemonize(config);
+  });
+  
 }
-if (program.stop) { /* stop daemon by pid */  }
-if (program.list) { /* log.(daemons.list) */  }
+// if (program.stop) { /* stop daemon by pid */  }
+// if (program.list) { /* log.(daemons.list) */  }

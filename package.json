@@ -1,11 +1,11 @@
 {
-  "name": "simple-express-daemon",
-  "version": "0.1.0",
-  "description": "This is simple daemon for cluster express app.",
+  "name": "node-clusterize-cli",
+  "version": "1.0.0",
+  "description": "Simple CLI interface for clusterize and demonize your apps",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shuvalov-anton/simple-express-daemon.git"
+    "url": "https://github.com/shuvalov-anton/node-clusterize-cli.git"
   },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "bin": {
@@ -19,7 +19,7 @@
     "express"
   ],
   "bugs": {
-    "url": "https://github.com/shuvalov-anton/simple-express-daemon/issues"
+    "url": "https://github.com/shuvalov-anton/node-clusterize-cli/issues"
   },
   "dependencies": {
     "commander": "~2.1.0",

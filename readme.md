@@ -6,6 +6,11 @@
 Simple CLI interface for clusterize and demonize your apps.
 
 
+## Install
+
+    npm i -g node-clusterize-cli
+
+
 ## Usage
 
 

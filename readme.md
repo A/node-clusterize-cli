@@ -1,41 +1,54 @@
 # Node Clusterize CLI
 
-#### Start
-
-    # Setup options inline
-    clusterize --app ./test/express/app.js --workers 32 --log ./cluster.log
-
-    # Or by config.json
-    clusterize --config ../test/my-config.json
+Simple CLI interface for clusterize and demonize your apps.
 
 
-#### Stop
-
-    # ps aux | grep 'clusterize master'
-    antonshuvalov   48922   0.0  0.2  3048032  14812   ??  Ss    8:13PM   0:00.15 clusterize master /Users/antonshuvalov/Desktop/daemonizer/test/express/app.js       
-    antonshuvalov   48970   0.0  0.0  2432784    492 s004  R+    8:13PM   0:00.00 grep clusterize master
-    $ kill -9 48922
+## Usage
 
 
-#### Arguments
+### Arguments
 
     Usage: clusterize [options]
 
-    Options:
+      Options:
 
-      -h, --help           output usage information
-      -V, --version        output the version number
-      -c, --config <path>  Add config path
-      -a, --app <path>     Add path to demonizing app
-      -w, --workers <q>    Set quantity of workers for your app. Defaut value is cpu.cores*2
-      -l, --log <path>     Add path to demonizing app
+        -h, --help           output usage information
+        -V, --version        output the version number
+        list                 list of running custers
+        kill <pid>           stop daemon and all it's workers
+        -c, --config <path>  Add config path
+        -a, --app <path>     Add path to demonizing app
+        -w, --workers <q>    Set quantity of workers for your app. Defaut value is cpu.cores*2
+        -l, --log <path>     Add path to demonizing app
 
 
-### Config
+### Start
+
+    # Setup options inline
+    $ clusterize --app ./test/express/app.js --workers 32 --log ./cluster.log
+    start daemon
+
+    # Or by config.json
+    $ clusterize --config ../test/my-config.json
+    start daemon
+
+## List
+
+    $ clusterize list
+    53416 test/express/app.js
+
+## Kill
+
+    $ clusterize kill 53416
+    done
+
+
+## Config format
 
     {
       "app": "../test/express/app.js",
       "log": "../test/logs/test.log",
       "workers": "4"
     }
+
 

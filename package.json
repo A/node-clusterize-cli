@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "commander": "~2.1.0",
-    "daemon": "~1.1.0"
+    "daemon": "~1.1.0",
+    "colors": "~0.6.2"
   },
   "devDependencies": {
     "mocha": "~1.15.1"

@@ -10,6 +10,9 @@ var path           = require('path');
 var tmpdir         = require('os').tmpdir();
 var Daemonize      = require('../lib/node-daemonize');
 var cpus           = require('os').cpus().length;
+var exec           = require('child_process').exec;
+var log            = require('util').log;
+var colors         = require('colors');
 
 // End of Dependencies
 
@@ -19,6 +22,8 @@ var options        = {};
 
 module.exports = program
   .version(pkg.version)
+  .option('list', 'list of running custers')
+  .option('kill <pid>', 'stop daemon and all it\'s workers')
   .option('-c, --config <path>', 'Add config path')
   .option('-a, --app <path>', 'Add path to demonizing app')
   .option('-w, --workers <q>', 'Set quantity of workers for your app. Defaut value is cpu.cores*2')
@@ -26,13 +31,32 @@ module.exports = program
   .parse(process.argv);
 
 
-if (program.config) options = require(program.config);
-if (program.app) options.app = program.app;
-if (program.workers) options.workers = program.workers;
-if (program.log) options.stdio = program.log;
-if (!options.workers) options.workers = cpus * 2;
-if (options.stdio) options.stdio = path.resolve(process.env.PWD, options.stdio);
-if (!options.app) throw new Error('WHERE IS YOUR APP?');
-options.app = path.resolve(process.env.PWD, options.app);
-
-if (options.app) new Daemonize(options);
+if (program.list) {
+  exec('ps -eo pid,comm | grep "clusterize master"', function (err, stdout) {
+    if (!stdout) return console.log('nothing'.green);
+    var appname = stdout
+      .match(/\/+[\.\ \/A-Za-z]+\b/)[0];
+    appname = appname
+      .split('/')
+      .slice(-3)
+      .join('/');
+    var pid = stdout
+      .match(/^([0-9]+)\b/)[0];
+    console.log(pid.green, appname);
+  });
+} else if (program.kill) {
+  exec('kill -9 ' + program.kill, function (err, stdout) {
+    console.log(err && err.message.red || 'done'.green);
+  });
+} else {
+  if (program.config) options = require(program.config);
+  if (program.app) options.app = program.app;
+  if (program.workers) options.workers = program.workers;
+  if (program.log) options.stdio = program.log;
+  if (!options.workers) options.workers = cpus * 2;
+  if (options.stdio) options.stdio = path.resolve(process.env.PWD, options.stdio);
+  if (!options.app) throw new Error('WHERE IS YOUR APP?');
+  options.app = path.resolve(process.env.PWD, options.app);
+  console.log('done'.green);
+  if (options.app) new Daemonize(options);
+}

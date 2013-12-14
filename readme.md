@@ -16,7 +16,6 @@ Simple CLI interface for clusterize and demonize your apps.
         -V, --version        output the version number
         list                 list of running custers
         kill <pid>           stop daemon and all it's workers
-        -c, --config <path>  Add config path
         -a, --app <path>     Add path to demonizing app
         -w, --workers <q>    Set quantity of workers for your app. Defaut value is cpu.cores*2
         -l, --log <path>     Add path to demonizing app

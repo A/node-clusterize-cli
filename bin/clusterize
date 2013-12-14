@@ -8,19 +8,25 @@ var program        = require('commander');
 var pkg            = require('../package.json');
 var path           = require('path');
 var tmpdir         = require('os').tmpdir();
-var Daemonize      = require('../lib/node-clusterize');
-var cpus           = require('os').cpus().length;
+var Clusterize     = require('../lib/node-clusterize');
 var exec           = require('child_process').exec;
 var log            = require('util').log;
 var colors         = require('colors');
 var cluster        = require('cluster');
+var cpus           = require('os').cpus().length;
+var pwd            = process.env.PWD;
+var fs             = require('fs');
 
 // End of Dependencies
+
 
 
 var options        = {};
 
 
+/**
+ * Setup CLI options.
+ */
 module.exports = program
   .version(pkg.version)
   .option('list', 'list of running custers')
@@ -32,26 +38,45 @@ module.exports = program
   .parse(process.argv);
 
 
+/**
+ * Print list of running daemons
+ */
 if (program.list) {
-  exec('ps -eo pid,comm | grep "clusterize master"', function (err, stdout) {
+  return exec('ps -eo pid,comm | grep "clusterize master"', function (err, stdout) {
     if (!stdout) return console.log('nothing'.red);
     var appname = stdout.match(/\/+[\.\ \/A-Za-z]+\b/)[0].split('/').slice(-3).join('/');
     var pid = stdout.match(/^([0-9]+)\b/)[0];
     console.log(pid.green, appname);
   });
-} else if (program.kill) {
-  exec('kill -9 ' + program.kill, function (err, stdout) {
+}
+
+
+/**
+ * kill -9 Daemons by PID.
+ */
+if (program.kill) {
+  return exec('kill -9 ' + program.kill, function (err, stdout) {
     console.log(err && err.message.red || 'done'.green);
   });
-} else {
-  if (program.config) options = require(program.config);
-  if (program.app) options.app = program.app;
-  if (program.workers) options.workers = program.workers;
-  if (program.log) options.stdout = program.log;
-  if (!options.workers) options.workers = cpus * 2;
-  if (options.stdout) options.stdout = path.resolve(process.env.PWD, options.stdout);
-  if (!options.app) throw new Error('WHERE IS YOUR APP?');
-  options.app = path.resolve(process.env.PWD, options.app);
+}
+
+
+/**
+ * Start new daemon.
+ */
+if (program.app) {
+
+  var logfile = path.resolve(pwd, program.log);
+  console.log(logfile);
   cluster.isMaster && console.log('done'.green);
-  if (options.app) new Daemonize(options);
+
+  new Clusterize({
+    app: path.resolve(process.env.PWD, program.app),
+    workers: program.workers || cpus * 2,
+    stdout: fs.openSync(logfile, 'a'),
+    stderr: fs.openSync(logfile, 'a')
+  });
+
+} else {
+  program.help();
 }

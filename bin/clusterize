@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+'use strict';
+
+/**
+ * Module dependencies.
+ */
+var program        = require('commander');
+var pkg            = require('../package.json');
+var path           = require('path');
+var tmpdir         = require('os').tmpdir();
+var Daemonize      = require('../lib/node-daemonize');
+var cpus           = require('os').cpus().length;
+
+// End of Dependencies
+
+
+var options        = {};
+
+
+module.exports = program
+  .version(pkg.version)
+  .option('-c, --config <path>', 'Add config path')
+  .option('-a, --app <path>', 'Add path to demonizing app')
+  .option('-w, --workers <q>', 'Set quantity of workers for your app. Defaut value is cpu.cores*2')
+  .option('-l, --log <path>', 'Add path to demonizing app')
+  .parse(process.argv);
+
+
+if (program.config) options = require(program.config);
+if (program.app) options.app = program.app;
+if (program.workers) options.workers = program.workers;
+if (program.log) options.stdio = program.log;
+if (!options.workers) options.workers = cpus * 2;
+if (options.stdio) options.stdio = path.resolve(process.env.PWD, options.stdio);
+if (!options.app) throw new Error('WHERE IS YOUR APP?');
+options.app = path.resolve(process.env.PWD, options.app);
+
+if (options.app) new Daemonize(options);

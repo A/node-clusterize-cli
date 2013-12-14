@@ -9,6 +9,9 @@
   },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "main": "index.js",
+  "scripts": {
+    "test": "jshint -c .jshintrc ./lib ./bin ./test && mocha"
+  },
   "keywords": [
     "daemon",
     "express"
@@ -17,7 +20,10 @@
     "url": "https://github.com/shuvalov-anton/simple-express-daemon/issues"
   },
   "dependencies": {
-    "commander": "~2.1.0"
+    "commander": "~2.1.0",
+    "daemon": "~1.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "~1.15.1"
+  }
 }

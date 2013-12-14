@@ -1,5 +1,5 @@
 {
-  "app": "./app.js",
-  "log": "./logs/test.log",
+  "app": "../test/app.js",
+  "log": "../test/logs/test.log",
   "workers": "4"
 }

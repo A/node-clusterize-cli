@@ -13,6 +13,7 @@ var cpus           = require('os').cpus().length;
 var exec           = require('child_process').exec;
 var log            = require('util').log;
 var colors         = require('colors');
+var cluster        = require('cluster');
 
 // End of Dependencies
 
@@ -46,11 +47,11 @@ if (program.list) {
   if (program.config) options = require(program.config);
   if (program.app) options.app = program.app;
   if (program.workers) options.workers = program.workers;
-  if (program.log) options.stdio = program.log;
+  if (program.log) options.stdout = program.log;
   if (!options.workers) options.workers = cpus * 2;
-  if (options.stdio) options.stdio = path.resolve(process.env.PWD, options.stdio);
+  if (options.stdout) options.stdout = path.resolve(process.env.PWD, options.stdout);
   if (!options.app) throw new Error('WHERE IS YOUR APP?');
   options.app = path.resolve(process.env.PWD, options.app);
-  console.log('done'.green);
+  cluster.isMaster && console.log('done'.green);
   if (options.app) new Daemonize(options);
 }

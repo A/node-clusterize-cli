@@ -8,7 +8,7 @@ var program        = require('commander');
 var pkg            = require('../package.json');
 var path           = require('path');
 var tmpdir         = require('os').tmpdir();
-var Daemonize      = require('../lib/node-daemonize');
+var Daemonize      = require('../lib/node-clusterize');
 var cpus           = require('os').cpus().length;
 var exec           = require('child_process').exec;
 var log            = require('util').log;
@@ -33,15 +33,9 @@ module.exports = program
 
 if (program.list) {
   exec('ps -eo pid,comm | grep "clusterize master"', function (err, stdout) {
-    if (!stdout) return console.log('nothing'.green);
-    var appname = stdout
-      .match(/\/+[\.\ \/A-Za-z]+\b/)[0];
-    appname = appname
-      .split('/')
-      .slice(-3)
-      .join('/');
-    var pid = stdout
-      .match(/^([0-9]+)\b/)[0];
+    if (!stdout) return console.log('nothing'.red);
+    var appname = stdout.match(/\/+[\.\ \/A-Za-z]+\b/)[0].split('/').slice(-3).join('/');
+    var pid = stdout.match(/^([0-9]+)\b/)[0];
     console.log(pid.green, appname);
   });
 } else if (program.kill) {

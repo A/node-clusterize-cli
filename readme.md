@@ -25,7 +25,7 @@ Simple CLI interface for clusterize and demonize your apps.
 ### Start
 
     $ clusterize --app ./test/express/app.js --workers 32 --log ./cluster.log
-    start daemon
+    done
 
 
 ### List

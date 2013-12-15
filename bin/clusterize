@@ -64,15 +64,14 @@ if (program.kill) {
  */
 if (program.app) {
 
-  var logfile = path.resolve(pwd, program.log);
-  console.log(logfile);
+  var logfile = program.log && path.resolve(pwd, program.log);
   cluster.isMaster && console.log('done'.green);
 
   new Clusterize({
     app: path.resolve(process.env.PWD, program.app),
     workers: program.workers || cpus * 2,
-    stdout: fs.openSync(logfile, 'a'),
-    stderr: fs.openSync(logfile, 'a')
+    stdout: logfile && fs.openSync(logfile, 'a'),
+    stderr: logfile && fs.openSync(logfile, 'a')
   });
 
 } else {

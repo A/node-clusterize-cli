@@ -1,6 +1,6 @@
 {
   "name": "node-clusterize-cli",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Simple CLI interface for clusterize and demonize your apps",
   "license": "MIT",
   "repository": {

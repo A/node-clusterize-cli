@@ -22,7 +22,6 @@ var fs             = require('fs');
 
 var options        = {};
 
-
 /**
  * Setup CLI options.
  */
@@ -40,7 +39,7 @@ module.exports = program
  * Print list of running daemons
  */
 if (program.list) {
-  return exec('ps -axo pid,args | grep "clusterize master" | grep -v grep', function (err, stdout) {
+  return exec('ps aux | grep "clusterize master" | grep -v grep | awk \'{print $2 " " $11}\'', function (err, stdout) {
     if (!stdout) return console.log('nothing'.red);
     console.log(stdout.green);
   });

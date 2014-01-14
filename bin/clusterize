@@ -40,11 +40,9 @@ module.exports = program
  * Print list of running daemons
  */
 if (program.list) {
-  return exec('ps -eo pid,comm | grep "clusterize master"', function (err, stdout) {
+  return exec('ps -axo pid,args | grep "clusterize master" | grep -v grep', function (err, stdout) {
     if (!stdout) return console.log('nothing'.red);
-    var appname = stdout.match(/\/+[\.\ \/A-Za-z]+\b/)[0].split('/').slice(-3).join('/');
-    var pid = stdout.match(/^([0-9]+)\b/)[0];
-    console.log(pid.green, appname);
+    console.log(stdout.green);
   });
 }
 

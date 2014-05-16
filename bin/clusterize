@@ -13,7 +13,6 @@ var log            = require('util').log;
 var colors         = require('colors');
 var cluster        = require('cluster');
 var cpus           = require('os').cpus().length;
-var pwd            = process.env.PWD;
 var fs             = require('fs');
 
 // End of Dependencies
@@ -61,11 +60,11 @@ if (program.kill) {
  */
 if (program.app) {
 
-  var logfile = program.log && path.resolve(pwd, program.log);
+  var logfile = program.log && path.resolve(process.cwd(), program.log);
   cluster.isMaster && console.log('done'.green);
 
   new Clusterize({
-    app: path.resolve(process.env.PWD, program.app),
+    app: path.resolve(process.cwd(), program.app),
     workers: program.workers || cpus * 2,
     stdout: logfile && fs.openSync(logfile, 'a'),
     stderr: logfile && fs.openSync(logfile, 'a')

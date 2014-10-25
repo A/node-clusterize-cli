@@ -3,7 +3,7 @@
 [![Build Status](https://secure.travis-ci.org/shuvalov-anton/node-clusterize-cli.png)](http://travis-ci.org/shuvalov-anton/node-clusterize-cli)
 [![Code Climate](https://codeclimate.com/github/shuvalov-anton/node-clusterize-cli.png)](https://codeclimate.com/github/shuvalov-anton/node-clusterize-cli)  
 
-[![NPM](https://nodei.co/npm/node-clusterize-cli.png)](https://nodei.co/npm/node-clusterize-cli/)
+[![NPM](https://nodei.co/npm/node-clusterize-cli.png?downloads=true)](https://nodei.co/npm/node-clusterize-cli/)
 
 Simple CLI interface for clusterize, demonize your apps. Also, it starts again
 fallen instances of your application.
